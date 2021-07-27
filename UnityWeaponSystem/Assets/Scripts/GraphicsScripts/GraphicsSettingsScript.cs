@@ -5,19 +5,28 @@ using UnityEngine.UI;
 using UnityEngine.Rendering.PostProcessing;
 using TMPro;
 
+
 public class GraphicsSettingsScript : MonoBehaviour
 {
     Resolution[] resolutions;
     public TMPro.TMP_Dropdown resolutionDropdown;
 
     public PostProcessVolume m_Volume;
+    public Bloom m_Bloom = null;
+    public AmbientOcclusion m_AO = null;
+    public MotionBlur m_mb = null;
 
-    public Toggle m_toggle;
+    public Toggle pp_toggle;
+    public Toggle bloom_toggle;
+    public Toggle AO_toggle;
+    public Toggle Motion_Blur_toggle;
 
     
     void Start()
     {
-
+        m_Volume.profile.TryGetSettings(out m_Bloom);
+        m_Volume.profile.TryGetSettings(out m_AO);
+        m_Volume.profile.TryGetSettings(out m_mb);
         resolutions = Screen.resolutions;
 
         resolutionDropdown.ClearOptions();
@@ -57,7 +66,7 @@ public class GraphicsSettingsScript : MonoBehaviour
     }
     public void EnablePostProcessing()
     {
-        if (m_toggle.isOn == true)
+        if (pp_toggle.isOn == true)
         {
             m_Volume.enabled = true;
         }
@@ -65,9 +74,45 @@ public class GraphicsSettingsScript : MonoBehaviour
         {
             m_Volume.enabled = false;
         }
-
     }
-   
+    public void EnableBloom()
+    {
+        if (bloom_toggle.isOn == true)
+        {
+            m_Bloom.active = true;
+        }
+        else
+        {
+            m_Bloom.active = false;
+
+        }
+    }
+    public void EnableAmbientOcclusion()
+    {
+        if (AO_toggle.isOn == true)
+        {
+            m_AO.active = true;
+        }
+        else
+        {
+            m_AO.active = false;
+        }
+    }
+    public void EnableMotionBlur()
+    {
+        if (Motion_Blur_toggle.isOn == true)
+        {
+            m_mb.active = true;
+        }
+        else
+        {
+            m_mb.active = false;
+        }
+        
+    }
+      
+    
+
 }
    
 

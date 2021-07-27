@@ -5,9 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class SoundManagerScript : MonoBehaviour
-{ 
+{
     public AudioClip[] BGM;
     public AudioClip[] MainMenuBGM;
+    public AudioClip[] ButtonHover;
+    public AudioClip[] ButtonClicked;
 
     public float BGMVolume;
     public float SFXVolume;
@@ -75,8 +77,24 @@ public class SoundManagerScript : MonoBehaviour
             yield return new WaitForSeconds(audioClip.length);
         }
     }
-   
-    
+    public void MouseOverButton()
+    {
+        AudioClip audioClip = ButtonHover[Random.Range(0, ButtonHover.Length)];
+        sfxSource.clip = audioClip;
+        sfxSource.volume = SFXVolume;
+        sfxSource.PlayOneShot(sfxSource.clip);
+        
+    }
+    public void ButtonPressed()
+    {
+        AudioClip audioClip = ButtonClicked[Random.Range(0, ButtonClicked.Length)];
+        sfxSource.clip = audioClip;
+        sfxSource.volume = SFXVolume;
+        sfxSource.PlayOneShot(sfxSource.clip);
+        
+    }
+
+
     private void Awake()
     {
         if (!SoundManager)

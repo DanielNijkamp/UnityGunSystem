@@ -39,10 +39,7 @@ public class AudioSettingsScript : MonoBehaviour
         SFXChanged(SFXSliderPerfs);
         BGMChanged(BGMSliderPerfs);
     }
-    private void BackButtonClicked()
-    {
-        CloseSettings();
-    }
+    
     public void CloseSettings()
     {
         SettingIsOpen = false;
