@@ -2,26 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
+
 
 public class MainMenuScript : MonoBehaviour
 {
+    public GameObject LoadingCanvas;
+    public Slider slider;
+    public TextMeshProUGUI ProgressText;
 
-    public GameObject cam;
-    public GameObject MainMenuCanvas;
-    public GameObject SettingsMenuCanvas;
-    public void PlayGame()
+    public void PlayGame(int sceneIndex)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        StartCoroutine(LoadAsync(sceneIndex));
     }
     public void QuitGame()
     {
         Application.Quit();
     }
-    public void OpenSettings()
+    IEnumerator LoadAsync(int sceneIndex)
     {
-        MainMenuCanvas.SetActive(false);
-        SettingsMenuCanvas.SetActive(true);
+        AsyncOperation operation = SceneManager.LoadSceneAsync("GameScene");
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / .9f);
+            slider.value = progress;
+            ProgressText.text = progress * 100f + "%";
+            yield return null;
+        }
+        if (operation.isDone)
+        {
+            LoadingCanvas.SetActive(false);
+        }
     }
+   
+    
    
    
 }
