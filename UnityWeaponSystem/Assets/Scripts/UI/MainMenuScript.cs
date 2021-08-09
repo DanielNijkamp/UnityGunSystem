@@ -33,6 +33,7 @@ public class MainMenuScript : MonoBehaviour
         if (operation.isDone)
         {
             LoadingCanvas.SetActive(false);
+            
         }
     }
    

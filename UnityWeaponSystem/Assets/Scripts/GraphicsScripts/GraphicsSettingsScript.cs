@@ -4,29 +4,52 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering.PostProcessing;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 
 public class GraphicsSettingsScript : MonoBehaviour
 {
+
+
+
+
+
     Resolution[] resolutions;
     public TMPro.TMP_Dropdown resolutionDropdown;
 
     public PostProcessVolume m_Volume;
+
+    public GameObject volumeobject;
+
     public Bloom m_Bloom = null;
     public AmbientOcclusion m_AO = null;
     public MotionBlur m_mb = null;
+
+
+
+
 
     public Toggle pp_toggle;
     public Toggle bloom_toggle;
     public Toggle AO_toggle;
     public Toggle Motion_Blur_toggle;
 
-    
+
+
+    public bool PP_bool;
+    public bool Bloom_bool;
+    public bool AO_bool;
+    public bool Mb_bool;
+
+
     void Start()
     {
+
         m_Volume.profile.TryGetSettings(out m_Bloom);
         m_Volume.profile.TryGetSettings(out m_AO);
         m_Volume.profile.TryGetSettings(out m_mb);
+
+
         resolutions = Screen.resolutions;
 
         resolutionDropdown.ClearOptions();
@@ -51,6 +74,18 @@ public class GraphicsSettingsScript : MonoBehaviour
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
     }
+
+    private void Update()
+    {
+       
+    }
+    /*Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+        if (sceneName == "GameScene")
+  
+            SceneSettings();
+        }*/
+
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = resolutions[resolutionIndex];
@@ -64,54 +99,109 @@ public class GraphicsSettingsScript : MonoBehaviour
     {
         Screen.fullScreen = isFullscreen;
     }
-    public void EnablePostProcessing()
+
+    public void TogglePostProcessing()
     {
         if (pp_toggle.isOn == true)
         {
             m_Volume.enabled = true;
+            PP_bool = true;
         }
         else
         {
             m_Volume.enabled = false;
+            PP_bool = false;
         }
     }
-    public void EnableBloom()
+    public void ToggleBloom()
     {
         if (bloom_toggle.isOn == true)
         {
             m_Bloom.active = true;
+            Mb_bool = true;
         }
         else
         {
             m_Bloom.active = false;
+            Mb_bool = false;
 
         }
     }
-    public void EnableAmbientOcclusion()
+    public void ToggleAmbientOcclusion()
     {
         if (AO_toggle.isOn == true)
         {
+            
             m_AO.active = true;
+            AO_bool = true;
         }
         else
         {
             m_AO.active = false;
+            AO_bool = false;
         }
     }
-    public void EnableMotionBlur()
+    public void ToggleMotionBlur()
     {
         if (Motion_Blur_toggle.isOn == true)
         {
             m_mb.active = true;
+            Mb_bool = true;
         }
         else
         {
             m_mb.active = false;
+            Mb_bool = false;
         }
         
     }
-      
-    
+
+    public void SceneSettings()
+    {
+        if (PP_bool == !true)
+        {
+            m_Volume.enabled = false;
+        }
+        else
+        {
+            m_Volume.enabled = true;
+        }
+        //bloom 
+        if (Bloom_bool == !true)
+        {
+            m_Bloom.active = false;
+        }
+        else
+        {
+            m_Bloom.active = true;
+        }
+        //Ambient occlusion
+        if (AO_bool == !true)
+        {
+            m_AO.active = false;
+        }
+        else
+        {
+            m_AO.active = true;
+        }
+        //motion blur
+        if (Mb_bool == !true)
+        {
+            m_mb.active = false;
+        }
+        else
+        {
+            m_mb.active = true;
+        }
+
+
+    }
+    private void Awake()
+    {
+        DontDestroyOnLoad(volumeobject);
+    }
+
+
 
 }
    
