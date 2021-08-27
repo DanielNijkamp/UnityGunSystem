@@ -8,10 +8,20 @@ using TMPro;
 
 public class MainMenuScript : MonoBehaviour
 {
+    public GameObject MainMenuCanvas;
     public GameObject LoadingCanvas;
+    public GameObject GraphicsCanvas;
+    public GameObject AudioCanvas;
+    public GameObject SecretCanvas;
+
+
+
+
+    public GameObject SettingsMenuCanvas;
     public Slider slider;
     public TextMeshProUGUI ProgressText;
 
+    public GameObject MainMenuBackButton;
     public void PlayGame(int sceneIndex)
     {
         StartCoroutine(LoadAsync(sceneIndex));

@@ -28,7 +28,6 @@ public class GraphicsSettingsScript : MonoBehaviour
 
 
 
-
     public Toggle pp_toggle;
     public Toggle bloom_toggle;
     public Toggle AO_toggle;
@@ -41,14 +40,13 @@ public class GraphicsSettingsScript : MonoBehaviour
     public bool AO_bool;
     public bool Mb_bool;
 
-
+    
     void Start()
     {
 
-        m_Volume.profile.TryGetSettings(out m_Bloom);
-        m_Volume.profile.TryGetSettings(out m_AO);
-        m_Volume.profile.TryGetSettings(out m_mb);
-
+        
+        volumeobject.SetActive(true);
+        
 
         resolutions = Screen.resolutions;
 
@@ -118,12 +116,12 @@ public class GraphicsSettingsScript : MonoBehaviour
         if (bloom_toggle.isOn == true)
         {
             m_Bloom.active = true;
-            Mb_bool = true;
+            Bloom_bool = true;
         }
         else
         {
             m_Bloom.active = false;
-            Mb_bool = false;
+            Bloom_bool = false;
 
         }
     }
@@ -156,50 +154,34 @@ public class GraphicsSettingsScript : MonoBehaviour
         
     }
 
-    public void SceneSettings()
-    {
-        if (PP_bool == !true)
-        {
-            m_Volume.enabled = false;
-        }
-        else
-        {
-            m_Volume.enabled = true;
-        }
-        //bloom 
-        if (Bloom_bool == !true)
-        {
-            m_Bloom.active = false;
-        }
-        else
-        {
-            m_Bloom.active = true;
-        }
-        //Ambient occlusion
-        if (AO_bool == !true)
-        {
-            m_AO.active = false;
-        }
-        else
-        {
-            m_AO.active = true;
-        }
-        //motion blur
-        if (Mb_bool == !true)
-        {
-            m_mb.active = false;
-        }
-        else
-        {
-            m_mb.active = true;
-        }
-
-
-    }
+    
     private void Awake()
     {
-        DontDestroyOnLoad(volumeobject);
+
+        GetInfo();
+        Initiallize();
+  
     }
+    void GetInfo()
+    {
+        m_Volume.profile.TryGetSettings(out m_Bloom);
+        m_Volume.profile.TryGetSettings(out m_AO);
+        m_Volume.profile.TryGetSettings(out m_mb);
+    }
+    void Initiallize()
+    {
+        pp_toggle.isOn = true;
+        bloom_toggle.isOn = true;
+        AO_toggle.isOn = true;
+        Motion_Blur_toggle.isOn = true;
+
+        m_Volume.enabled = true;
+        m_Bloom.active = true;
+        m_AO.active = true;
+        m_mb.active = true;
+
+    }
+    
 
 
 
